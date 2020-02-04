@@ -5,7 +5,7 @@ ghpages.publish(
   'public',
   {
     branch: 'master',
-    repo: 'https://github.com/2wce/2wce.github.io/blog.git',
+    repo: 'https://github.com/2wce/blog.git',
   },
   () => {
     console.log('Deploy Complete!')

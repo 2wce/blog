@@ -6,7 +6,7 @@
     "develop": "gatsby develop",
     "start": "gatsby develop",
     "build": "gatsby build",
-    "deploy": "npm run build && node ./scripts/deploy-github"
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
   },
   "dependencies": {
     "gatsby": "^2.18.6",
