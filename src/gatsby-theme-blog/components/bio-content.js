@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from "react"
 
 /**
  * Change the content to add your own bio
@@ -6,9 +6,13 @@ import React, { Fragment } from "react";
 
 export default () => (
   <Fragment>
-    Hie <span role="img" aria-label="person">🙋🏽‍♂️</span>, I'm Kudakwashe
+    Hie{" "}
+    <span role="img" aria-label="person">
+      🙋🏽‍♂️
+    </span>
+    , I'm Kudakwashe
     {` `}
     <br />
-    I'm a Full Stack Developer.
+    I'm a Backend & Devops Engineer.
   </Fragment>
 )
