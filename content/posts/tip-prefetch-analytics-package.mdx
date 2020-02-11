@@ -26,7 +26,7 @@ templateKey: blog-post
 - [Some Dev chores](#some-dev-chores)
   - [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
 - [Audit Site with Lighthouse](#audit-site-with-lighthouse)
-- [What did you just do?](what-did-you-just-do)
+- [What did we just do?](what-did-we-just-do)
 
 In this advanced tutorial, you’ll learn how to fix a issue in Gatsby that can come up when you use google analytics and audit your site with [Lighthouse](https://developers.google.com/web/tools/lighthouse/#devtools).
 
@@ -45,7 +45,7 @@ cd gatsby-portfolio-dev
 
 ## Adding the Google Analytics ID
 
-Open the root site directory in a text editor and navigate to `config.js` and replace the googleAnalyticsID in `config.js` with your own. Your `config.js` should look like the following code example:
+Open the root site directory in a text editor and navigate to `data/config.js` and replace the `googleAnalyticsID` in `data/config.js` with your own. Your `data/config.js` should look like the following code example:
 
 ```js:title=config.js
 module.exports = {
@@ -117,7 +117,7 @@ Run `npm run develop` in the terminal, which starts a development server and rel
 
 ## Audit Site with Lighthouse
 
-Right click on the page and inspect it. Go to audit and generate a report. One of the performance issues that will be the following.
+Right click on the page and inspect it. Go to audit and generate a report. One of the performance issues that will come up is the prefetch issue as shown below.
 
 ```
 will add image
@@ -141,9 +141,9 @@ export const onRenderBody = ({ setHeadComponents }) => {
 
 If you restart your server & go back to `http://localhost:8000/` in your browser and you regenerate the report, you should now see that the error has been fixed.
 
-## What did you just do?
+## What did we just do?
 
-You replaced the link in the head with one that satisfies the suggestion in Lighthouse by using a cool Gatsby feature. The file gatsby-ssr.js lets you alter the content of static HTML files as they are being Server-Side Rendered (SSR) by Gatsby and Node.js [Gatsby-SSR](https://www.gatsbyjs.org/docs/api-files-gatsby-ssr/). The following snippet targets the head & replaces the link:
+We replaced the link in the head with one that satisfies the suggestion in Lighthouse by using a cool Gatsby feature. The file `gatsby-ssr.js` lets you alter the content of static HTML files as they are being Server-Side Rendered (SSR) by Gatsby and Node.js [Gatsby-SSR](https://www.gatsbyjs.org/docs/api-files-gatsby-ssr/). The following snippet targets the head & replaces the link:
 
 ```jsx:title=src/components/checkout.js
 setHeadComponents([

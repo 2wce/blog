@@ -15,7 +15,9 @@
     "gatsby-source-filesystem": "^2.1.48",
     "gatsby-theme-blog": "^1.2.5",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-disqus-comments": "^1.4.0",
+    "react-dom": "^16.12.0",
+    "react-lazy-load": "^3.0.13"
   },
   "devDependencies": {
     "gh-pages": "^2.1.1"
