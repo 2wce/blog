@@ -1,11 +1,25 @@
 ---
 title: (Tip) Prefetch Google analytics in Gatsby
-date: 2020-01-27
+date: 2020-02-11
+featuredpost: true
+excerpt: In this advanced tutorial, you’ll learn how to fix a issue in Gatsby that can come up when you use...
+keywords:
+  - gatsby
+  - google-analytics
+  - tip
+link: /tip-prefetch-analytics-package
+category:
+  - Tips
+author: Kudakwashe Mupeni
+tags:
+  - gatsby
+  - react
+  - tips
+templateKey: blog-post
 ---
 
 # Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [Prerequisites](#prerequisites)
 - [Setting up a Gatsby site](#setting-up-a-gatsby-site)
 - [Adding the Google Analytics ID](#adding-the-google-analytics-id)
@@ -14,11 +28,11 @@ date: 2020-01-27
 - [Audit Site with Lighthouse](#audit-site-with-lighthouse)
 - [What did you just do?](what-did-you-just-do)
 
-In this advanced tutorial, you’ll learn how to fix a issue in Gatsby that can be highlighted when you use google analytics and audit your site with [Lighthouse](https://stripe.com).
+In this advanced tutorial, you’ll learn how to fix a issue in Gatsby that can come up when you use google analytics and audit your site with [Lighthouse](https://developers.google.com/web/tools/lighthouse/#devtools).
 
 ## Prerequisites
 
-- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial/))
+- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](https://www.gatsbyjs.org/tutorial/))
 
 # Setting up a Gatsby site
 
@@ -103,22 +117,15 @@ Run `npm run develop` in the terminal, which starts a development server and rel
 
 ## Audit Site with Lighthouse
 
-Right click on the page and inspect it. Go to audit and generate a report. One of the performance issues that will be highlightted will be like the following.
+Right click on the page and inspect it. Go to audit and generate a report. One of the performance issues that will be the following.
 
 ```
-image with issue
+will add image
 ```
 
 In order to fix this we should add `prefetch` or `dns-prefetch` to the google analytics link. We can do so by adding the following snippet to `gatsby-ssr.js`
 
-```js:title=config.js
-/**
- * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/ssr-apis/
- */
-
-// You can delete this file if you're not using it
+```js:title=gatsby-ssr.js
 import React from "react"
 
 export const onRenderBody = ({ setHeadComponents }) => {
@@ -136,10 +143,14 @@ If you restart your server & go back to `http://localhost:8000/` in your browser
 
 ## What did you just do?
 
-You imported React, added a button with some styles, and introduced some React functions. The `componentDidMount()` and `redirectToCheckout()` functions are most important for the Stripe functionality. The `componentDidMount()` function is a React lifecycle method that launches when the component is first mounted to the DOM, making it a good place to initialize the Stripe.js client. It looks like this:
+You replaced the link in the head with one that satisfies the suggestion in Lighthouse by using a cool Gatsby feature. The file gatsby-ssr.js lets you alter the content of static HTML files as they are being Server-Side Rendered (SSR) by Gatsby and Node.js [Gatsby-SSR](https://www.gatsbyjs.org/docs/api-files-gatsby-ssr/). The following snippet targets the head & replaces the link:
 
 ```jsx:title=src/components/checkout.js
-  componentDidMount() {
-    this.stripe = window.Stripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd")
-  }
+setHeadComponents([
+  <link
+    rel="dns-prefetch"
+    key="dns-prefetch-google-analytics"
+    href="https://www.google-analytics.com"
+  />,
+])
 ```

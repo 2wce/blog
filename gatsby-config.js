@@ -1,6 +1,30 @@
 module.exports = {
   pathPrefix: "/blog",
   plugins: [
+    `gatsby-plugin-sharp`,
+    `gatsby-remark-images`,
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1035,
+              sizeByPixelDensity: true,
+              gatsbyRemarkPlugins: [`gatsby-remark-images`],
+              plugins: [`gatsby-remark-images`],
+            },
+          },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/assets`,
+      },
+    },
     {
       resolve: `gatsby-theme-blog`,
       options: {},
