@@ -1,0 +1,145 @@
+---
+title: Tip: Prefetch Google analytics in Gatsby
+date: 2020-01-27
+---
+
+# Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Prerequisites](#prerequisites)
+- [Setting up a Gatsby site](#setting-up-a-gatsby-site)
+- [Adding the Google Analytics ID](#adding-the-google-analytics-id)
+- [Some Dev chores](#some-dev-chores)
+  - [See your site hot reload in the browser!](#see-your-site-hot-reload-in-the-browser)
+- [Audit Site with Lighthouse](#audit-site-with-lighthouse)
+- [What did you just do?](what-did-you-just-do)
+
+In this advanced tutorial, you’ll learn how to fix a issue in Gatsby that can be highlighted when you use google analytics and audit your site with [Lighthouse](https://stripe.com).
+
+## Prerequisites
+
+- Since this is a more advanced tutorial, building a site with Gatsby before will likely make this tutorial less time-consuming ([see the main tutorial here](/tutorial/))
+
+# Setting up a Gatsby site
+
+Create a new Gatsby project by running the `gatsby new` command in the terminal and change directories into the new project you just started:
+
+```shell
+gatsby new gatsby-portfolio-dev https://github.com/smakosh/gatsby-portfolio-dev
+cd gatsby-portfolio-dev
+```
+
+## Adding the Google Analytics ID
+
+Open the root site directory in a text editor and navigate to `config.js` and replace the googleAnalyticsID in `config.js` with your own. Your `config.js` should look like the following code example:
+
+```js:title=config.js
+module.exports = {
+  defaultTitle: "John Doe",
+  logo: "https://portfolio.smakosh.com/favicon/favicon-512.png",
+  author: "John Doe",
+  url: "https://portfolio.smakosh.com",
+  legalName: "John Doe",
+  defaultDescription: "I’m John and I’m a Backend & Devops engineer!",
+  socialLinks: {
+    twitter: "http://www.twitter.com/smakosh",
+    github: "https://github.com/smakosh",
+    linkedin: "https://www.linkedin.com/in/ismail-ghallou-630149122/",
+    instagram: "https://instagram.com/smakosh19",
+    youtube: "https://www.youtube.com/user/smakoshthegamer",
+    google: "https://plus.google.com/u/0/+IsmailSmakoshGhallou",
+  },
+  googleAnalyticsID: "UA-88875900-4", // replace me with your own ID (link to google analytics)
+  themeColor: "#6b63ff",
+  backgroundColor: "#6b63ff",
+  social: {
+    facebook: "appId",
+    twitter: "@smakosh",
+  },
+  address: {
+    city: "City",
+    region: "Region",
+    country: "Country",
+    zipCode: "ZipCode",
+  },
+  contact: {
+    email: "email",
+    phone: "phone number",
+  },
+  foundingDate: "2018",
+  recaptcha_key: "6Lcs6lQUAAAAAEwhNH2IsobIe2csdda4TU3efpMN",
+}
+```
+
+### Some Dev chores
+
+Please create a new file `.env.development` and put this env variable with your GitHub token
+
+> If you're building locally, you will have to create a new file `.env.production` and put the same env variable
+
+```bash
+GITHUB_TOKEN=xxxxxxxxxx
+```
+
+> [Get your GitHub access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line#creating-a-token)
+
+Don't forget to edit your site's data on `data/config.js` file with your Google Recaptcha public key
+
+When deploying on Netlify, you will have to set the private key as well
+
+```bash
+SITE_RECAPTCHA_KEY=xxxxx
+
+SITE_RECAPTCHA_SECRET=xxxxx
+```
+
+I highly recommend you check this [repository](https://github.com/imorente/gatsby-netlify-form-example) for more details about the Google Recaptcha and Netlify forms
+
+### See your site hot reload in the browser!
+
+Run `npm run develop` in the terminal, which starts a development server and reloads changes you make to your site so you can preview them in the browser. Open up your browser to `http://localhost:8000/` and you should see a default homepage.
+
+> **NOTE**: If you have already started your Gatsby development server using `npm run develop`, you will need to restart the server by pressing CTRL + C in the terminal where the command was run and running `npm run develop` again to see changes in your `gatsby-config.js` reflected on `http://localhost:8000/`
+
+## Audit Site with Lighthouse
+
+Right click on the page and inspect it. Go to audit and generate a report. One of the performance issues that will be highlightted will be like the following.
+
+```
+image with issue
+```
+
+In order to fix this we should add `prefetch` or `dns-prefetch` to the google analytics link. We can do so by adding the following snippet to `gatsby-ssr.js`
+
+```js:title=config.js
+/**
+ * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/ssr-apis/
+ */
+
+// You can delete this file if you're not using it
+import React from "react"
+
+export const onRenderBody = ({ setHeadComponents }) => {
+  setHeadComponents([
+    <link
+      rel="dns-prefetch"
+      key="dns-prefetch-google-analytics"
+      href="https://www.google-analytics.com"
+    />,
+  ])
+}
+```
+
+If you restart your server & go back to `http://localhost:8000/` in your browser and you regenerate the report, you should now see that the error has been fixed.
+
+## What did you just do?
+
+You imported React, added a button with some styles, and introduced some React functions. The `componentDidMount()` and `redirectToCheckout()` functions are most important for the Stripe functionality. The `componentDidMount()` function is a React lifecycle method that launches when the component is first mounted to the DOM, making it a good place to initialize the Stripe.js client. It looks like this:
+
+```jsx:title=src/components/checkout.js
+  componentDidMount() {
+    this.stripe = window.Stripe("pk_test_jG9s3XMdSjZF9Kdm5g59zlYd")
+  }
+```
