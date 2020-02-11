@@ -67,24 +67,6 @@ export const bioQuery = graphql`
         }
       }
     }
-    sun: file(relativePath: { eq: "sun.png" }) {
-      id
-      relativePath
-      childImageSharp {
-        fixed(width: 16, height: 16) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    moon: file(relativePath: { eq: "moon.png" }) {
-      id
-      relativePath
-      childImageSharp {
-        fixed(width: 16, height: 16) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
   }
 `
 

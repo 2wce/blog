@@ -1,8 +1,8 @@
-import { Link, useStaticQuery } from "gatsby"
+import { graphql, Link, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 import React from "react"
 import { css, Styled, useColorMode } from "theme-ui"
-import Bio, { bioQuery } from "./bio"
+import Bio from "./bio"
 import Switch from "./switch"
 
 const rootPath = `${__PATH_PREFIX__}/`
@@ -55,35 +55,32 @@ const Title = ({ children, location }) => {
 
 const iconCss = [{ pointerEvents: `none`, margin: 4 }]
 
-export const checkedIcon = moon => (
-  <Img
-    alt="moon indicating dark mode"
-    src={moon.childImageSharp.fluid}
-    width="16"
-    height="16"
-    role="presentation"
-    css={iconCss}
-  />
-)
-
-export const uncheckedIcon = sun => (
-  <>
-    console.log({sun})
-    <Img
-      alt="sun indicating light mode"
-      fluid={sun.childImageSharp.fluid}
-      width="16"
-      height="16"
-      role="presentation"
-      css={iconCss}
-    />
-  </>
-)
+export const query = graphql`
+  query {
+    sun: file(relativePath: { eq: "sun.png" }) {
+      id
+      relativePath
+      childImageSharp {
+        fixed(width: 16, height: 16) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    moon: file(relativePath: { eq: "moon.png" }) {
+      id
+      relativePath
+      childImageSharp {
+        fixed(width: 16, height: 16) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+  }
+`
 
 export default ({ children, title, ...props }) => {
   const [colorMode, setColorMode] = useColorMode()
-  const { moon, sun } = useStaticQuery(bioQuery)
-  console.log({ moon, sun })
+  const { moon, sun } = useStaticQuery(query)
   const isDark = colorMode === `dark`
   const toggleColorMode = e => {
     setColorMode(isDark ? `light` : `dark`)
