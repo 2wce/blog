@@ -1,6 +1,9 @@
+const config = require("./src/data/config")
+
 module.exports = {
   pathPrefix: "/blog",
   plugins: [
+    "gatsby-plugin-preload-link-crossorigin",
     `gatsby-plugin-sharp`,
     `gatsby-remark-images`,
     {
@@ -30,6 +33,37 @@ module.exports = {
       resolve: `gatsby-theme-blog`,
       options: {},
     },
+    {
+      resolve: "gatsby-plugin-favicon",
+      options: {
+        logo: "./static/favicon/favicon-512.png",
+        injectHTML: true,
+        icons: {
+          android: true,
+          appleIcon: true,
+          appleStartup: true,
+          coast: false,
+          favicons: true,
+          firefox: true,
+          twitter: false,
+          yandex: false,
+          windows: false,
+        },
+      },
+    },
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        name: config.defaultTitle,
+        short_name: "starter",
+        start_url: "/",
+        background_color: config.backgroundColor,
+        theme_color: config.themeColor,
+        display: "minimal-ui",
+        icon: "./static/favicon/favicon-512.png",
+      },
+    },
+    "gatsby-plugin-offline",
   ],
   // Customize your site metadata:
   siteMetadata: {
