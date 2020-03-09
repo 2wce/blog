@@ -1,0 +1,57 @@
+---
+title: Query related fields in Strapi
+date: 2020-03-09
+excerpt: In this advanced tutorial, you’ll learn how to query related fields in Strapi
+keywords:
+  - strapi
+  - graphql
+  - javascript
+  - tip
+link: /query-related-fields-strapi
+category:
+  - Tips
+author: Kudakwashe Mupeni
+tags:
+  - strapi
+  - javascript
+  - tips
+templateKey: blog-post
+---
+
+# Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Prerequisites](#prerequisites)
+- [Setting up project](#setting-up-project)
+- [Scenario](#scenario)
+  - [Problem](#problem)
+  - [Solution](#solution)
+
+In this advanced tutorial, you’ll learn how to query related fields in Strapi
+
+## Prerequisites
+
+- Be familiar with Strapi
+
+## Setting up project
+
+In order to create a project you can run the following command & cd into the project when it's done:
+
+```
+ npx create-strapi-app my-project --quickstart
+```
+
+## Scenario
+
+We have a Post content type and a User content type. A user can have many posts but a post belongs to one user. A user can follow many users and a user can be followed by many users.
+
+### Problem
+
+We need to write a graphql query that generates a user feed. The feed query accepts a user ID as an argument. For that given user(User A), we should get posts from users followed by User A + posts by User A to get our feed
+
+### Solution
+
+- install graphql plugin
+- setup dummy data for posts & users
+- create custom graphql resolver
+- get feed
