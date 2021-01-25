@@ -1,0 +1,170 @@
+---
+title: (Tip) Add Bugsnag to Strapi
+date: 2020-01-25
+featuredpost: true
+excerpt: In this advanced tutorial, you’ll learn how to fix a issue in Gatsby that can come up when you use...
+keywords:
+  - strapi
+  - bugsnag
+  - tip
+link: /add-bugsnag-to-strapi
+category:
+  - Tips
+author: Kudakwashe Mupeni
+tags:
+  - strapi
+  - bugsnag
+  - tips
+templateKey: blog-post
+---
+
+# Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Setting up a Strapi api](#setting-up a Strapi api)
+- [Adding Bugsnag to project](#adding-bugsnag-to-project)
+  - [Configure middleware load priority & enable bugsnag](#configure-middleware-load-priority-and-enable-bugsnag)
+- [Create Bugsnag middleware](#create-Bugsnag-middleware)
+- [What did we just do?](what-did-we-just-do)
+
+In this advanced tutorial, you’ll learn how to add Bugsnag to a strapi project.
+
+## Prerequisites
+
+- Since this is a more advanced tutorial, experience working with Strapi before will likely make this tutorial less confusing ([see the main tutorial here](https://strapi.io/documentation/user-docs/latest/getting-started/introduction.html#accessing-the-admin-panel))
+
+# Setting up a Strapi api
+
+Create a new Strapi project by entering the command below and change directories into the new project you just created:
+
+```shell
+yarn create strapi-app my-project --quickstart
+cd my-project
+```
+
+## Adding Bugsnag to project
+
+Install bugsnag & the koa plugin
+
+```shell
+npm install --save @bugsnag/js @bugsnag/plugin-koa
+# or
+yarn add @bugsnag/js @bugsnag/plugin-koa
+```
+
+Open the root site directory in a text editor and navigate to `./config/function/bootstrap.js` and add Bugsnag's start code. Your `./config/function/bootstrap.js` should look like the following code example:
+
+```js:title=config/function/bootstrap.js
+"use strict";
+const Bugsnag = require("@bugsnag/js");
+const BugsnagPluginKoa = require("@bugsnag/plugin-koa");
+/**
+ * An asynchronous bootstrap function that runs before
+ * your application gets started.
+ *
+ * This gives you an opportunity to set up your data model,
+ * run jobs, or perform some special logic.
+ *
+ * See more details here: https://strapi.io/documentation/v3.x/concepts/configurations.html#bootstrap
+ */
+
+module.exports = () => {
+  Bugsnag.start({
+    apiKey: "enterBugsnagKeyHere",
+    plugins: [BugsnagPluginKoa],
+  });
+};
+```
+
+### Configure middleware load priority & enable bugsnag
+
+Create a new file called middleware in the config folder `./config/middleware.js` to ensure the bugsnag middleware is enabled & is the first to be loaded.
+
+```js:title=config/middleware.js
+module.exports = {
+  load: {
+    before: ["bugsnag"],
+  },
+  settings: {
+    bugsnag: {
+      enabled: true,
+    },
+  },
+};
+```
+
+## Create Bugsnag middleware
+
+Create a new file `./middleware/bugsnag/index.js` and add the bugsnag middleware to the strapi Koa app
+
+```js:title=middleware/bugsnag/index.js
+const Bugsnag = require("@bugsnag/js");
+const middleware = Bugsnag.getPlugin("koa");
+
+module.exports = (strapi) => {
+  return {
+    // can also be async
+    initialize() {
+      strapi.app.use(async (ctx, next) => {
+        // This must be the first piece of middleware in the stack.
+        // It can only capture errors in downstream middleware
+        strapi.app.use(middleware.requestHandler);
+
+        /* all other middleware and application routes go here */
+
+        // This handles any errors that Koa catches
+        strapi.app.on("error", middleware.errorHandler);
+        await next();
+      });
+    },
+  };
+};
+```
+
+### See your logs in the Bugsnag dashboard!
+
+Now you can use `Bugsnag.notify(error)` to send a specific error to your Bugsnag dashboard
+
+> **NOTE**: Make sure you extract your bugsnag key to an environment variable 👍🏽
+
+## What did we just do?
+
+We added Bugsnag to strapi by making use of the bootstrap function to start Bugsnag when the server starts. We then added bugsnag as middleware to the Strapi Koa app which allowed us to use `Bugsnag.notify`
+
+```jsx:title=api/example/config/schema.graphql.js
+const Bugsnag = require("@bugsnag/js");
+
+module.exports = {
+  definition: /* GraphQL */ `
+    input MyInput {
+      name: String
+    }
+
+    type CheckTransactionResponse {
+      status: String
+    }
+  `,
+  query: ``,
+  mutation: `
+    dummyMutation(input: MyInput!): DummyMutationResponse
+  `,
+  type: {},
+  resolver: {
+    Mutation: {
+      dummyMutation: {
+        description: "dummy Mutation.",
+        policies: ["plugins::users-permissions.isAuthenticated"],
+        resolverOf: "application::example.example.dummyMutation",
+        resolver: async (obj, { input }, { context }) => {
+          try {
+          // await stuff
+          } catch (error) {
+            // if there's an error Bugsnag will know
+            Bugsnag.notify(error);
+          }
+        },
+      },
+    },
+  },
+};
+```
