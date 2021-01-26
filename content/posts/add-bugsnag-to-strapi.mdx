@@ -1,6 +1,6 @@
 ---
 title: (Tip) Add Bugsnag to Strapi
-date: 2021-01-25
+date: 2021-01-05
 featuredpost: true
 excerpt: In this advanced tutorial, you’ll learn how to add Bugsnag to a strapi project.
 keywords:
@@ -129,7 +129,7 @@ Now you can use `Bugsnag.notify(error)` to send a specific error to your Bugsnag
 
 ## What did we just do?
 
-We added Bugsnag to strapi by making use of the bootstrap function to start Bugsnag when the server starts. We then added bugsnag as middleware to the Strapi Koa app which allowed us to use `Bugsnag.notify`
+We added Bugsnag to strapi by making use of the bootstrap function to start Bugsnag when the server starts. We then added bugsnag as middleware to the Strapi Koa app which allowed us to use `Bugsnag.notify` like in the example below.
 
 ```jsx:title=api/example/config/schema.graphql.js
 const Bugsnag = require("@bugsnag/js");
