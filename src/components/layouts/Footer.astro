@@ -4,6 +4,7 @@ import type { ThemeOptions } from '@/typings/config';
 import ThemeSelect from '@/components/theme-select';
 import SocialLinks from '@/components/social-links';
 import slateConfig from '~@/slate.config';
+import Comments from './Comments.astro';
 
 interface Props {
   copyright?: string;
@@ -20,4 +21,5 @@ const { copyright = stateConfig.footer?.copyright } = Astro.props;
     {(stateConfig.theme as ThemeOptions).enableUserChange && <ThemeSelect client:visible />}
     {/* E theme selection */}
   </div>
+  <Comments />
 </footer>
