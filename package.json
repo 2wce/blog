@@ -76,6 +76,7 @@
     "eslint-plugin-react": "^7.37.2",
     "globals": "^15.11.0",
     "husky": "^9.1.6",
+    "postcss": "8.5.3",
     "postcss-import": "^16.1.0",
     "prettier": "^3.5.2",
     "prettier-plugin-astro": "^0.14.1",
@@ -83,6 +84,7 @@
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "sanitize-html": "^2.14.0",
-    "typescript-eslint": "^8.12.2"
+    "typescript-eslint": "^8.12.2",
+    "vite": "^6.2.0"
   }
 }

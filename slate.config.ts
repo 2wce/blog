@@ -15,5 +15,10 @@ export default defineConfig({
   readTime: true,
   footer: {
     copyright: `© ${year} Kudakwashe Mupeni`,
+  },
+  algolia: {
+    apiKey: process.env.ALGOLIA_API_KEY as string,
+    appId: process.env.ALGOLIA_APP_ID as string,
+    indexName: process.env.ALGOLIA_INDEX_NAME as string,
   }
 });

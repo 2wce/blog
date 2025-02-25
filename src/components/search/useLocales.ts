@@ -6,7 +6,47 @@ export const algoliaLocalesConfig: Record<
   LangType,
   Omit<DocSearchProps, 'appId' | 'apiKey' | 'indexName'>
 > = {
-  'en-US': {},
+  'en-US': {
+    placeholder: 'Search the docs',
+    translations: {
+      button: {
+        buttonText: 'Search',
+        buttonAriaLabel: 'Search',
+      },
+      modal: {
+        searchBox: {
+          resetButtonTitle: 'Clear the query',
+          resetButtonAriaLabel: 'Clear the query',
+          cancelButtonText: 'Cancel',
+          cancelButtonAriaLabel: 'Cancel',
+        },
+        startScreen: {
+          recentSearchesTitle: 'Recent searches',
+          noRecentSearchesText: 'No recent searches',
+          saveRecentSearchButtonTitle: 'Save to recent searches',
+          removeRecentSearchButtonTitle: 'Remove from recent searches',
+          favoriteSearchesTitle: 'Favorites',
+          removeFavoriteSearchButtonTitle: 'Remove from favorites',
+        },
+        errorScreen: {
+          titleText: 'Unable to fetch results',
+          helpText: 'You might need to check your network connection',
+        },
+        footer: {
+          selectText: 'Select',
+          navigateText: 'Navigate',
+          closeText: 'Close',
+          searchByText: 'Search by',
+        },
+        noResultsScreen: {
+          noResultsText: 'No results found',
+          suggestedQueryText: 'You can try searching for',
+          reportMissingResultsText: 'Think there should be results?',
+          reportMissingResultsLinkText: 'Click to report',
+        },
+      },
+    },
+  },
   'zh-CN': {
     placeholder: '搜索文档',
     translations: {
