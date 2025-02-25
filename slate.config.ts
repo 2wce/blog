@@ -5,7 +5,7 @@ import { defineConfig } from './src/helpers/config-helper';
 
 const year = new Date().getFullYear();
 
-const { ALGOLIA_API_KEY, ALGOLIA_APP_ID,ALGOLIA_INDEX_NAME } = import.meta.env
+const { PUBLIC_ALGOLIA_API_KEY, PUBLIC_ALGOLIA_APP_ID,PUBLIC_ALGOLIA_INDEX_NAME } = import.meta.env
 
 export default defineConfig({
   lang: 'en-US',
@@ -19,8 +19,8 @@ export default defineConfig({
     copyright: `© ${year} Kudakwashe Mupeni`,
   },
   algolia: {
-    apiKey: ALGOLIA_API_KEY,
-    appId: ALGOLIA_APP_ID,
-    indexName: ALGOLIA_INDEX_NAME,
+    apiKey: PUBLIC_ALGOLIA_API_KEY!,
+    appId: PUBLIC_ALGOLIA_APP_ID!,
+    indexName: PUBLIC_ALGOLIA_INDEX_NAME!,
   }
 });
