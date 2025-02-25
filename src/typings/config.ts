@@ -21,22 +21,14 @@ export interface SocialLink {
 }
 
 type SocialLinkIcon =
-  | 'dribbble'
-  | 'facebook'
-  | 'figma'
   | 'github'
   | 'instagram'
-  | 'jike'
-  | 'link'
-  | 'notion'
+  | 'linkedin'
   | 'npm'
-  | 'rednote'
   | 'rss'
   | 'threads'
   | 'stackoverflow'
-  | 'weibo'
   | 'x'
-  | 'youtube'
   | { svg: string };
 
 export interface SlateConfig {

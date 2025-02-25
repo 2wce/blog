@@ -5,7 +5,7 @@ import { defineConfig } from './src/helpers/config-helper';
 
 const year = new Date().getFullYear();
 
-const { PUBLIC_ALGOLIA_API_KEY, PUBLIC_ALGOLIA_APP_ID,PUBLIC_ALGOLIA_INDEX_NAME } = import.meta.env
+// const { PUBLIC_ALGOLIA_API_KEY, PUBLIC_ALGOLIA_APP_ID,PUBLIC_ALGOLIA_INDEX_NAME } = import.meta.env
 
 export default defineConfig({
   lang: 'en-US',
@@ -18,9 +18,19 @@ export default defineConfig({
   footer: {
     copyright: `© ${year} Kudakwashe Mupeni`,
   },
-  algolia: {
-    apiKey: PUBLIC_ALGOLIA_API_KEY!,
-    appId: PUBLIC_ALGOLIA_APP_ID!,
-    indexName: PUBLIC_ALGOLIA_INDEX_NAME!,
-  }
+  // algolia: {
+  //   apiKey: PUBLIC_ALGOLIA_API_KEY!,
+  //   appId: PUBLIC_ALGOLIA_APP_ID!,
+  //   indexName: PUBLIC_ALGOLIA_INDEX_NAME!,
+  // },
+  socialLinks: [
+    {
+      icon: 'github',
+      link: 'https://github.com/2wce'
+    },
+    // {
+    //   icon: 'linkedin',
+    //   link: 'https://www.linkedin.com/in/kudamupeni'
+    // },
+]
 });
