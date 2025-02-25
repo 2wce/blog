@@ -12,6 +12,7 @@ import slateConfig from '~@/slate.config';
 import { getFullTitle } from '@/helpers/utils';
 import 'remark-block-containers/css';
 import '@/assets/style/blog.css';
+import Comments from '@/components/layouts/Comments.astro';
 
 export async function getStaticPaths() {
   const postEntries = await getCollection('post', ({ data }) => {
@@ -82,6 +83,7 @@ const formattedPubDate = pubDate.isSame(dayjs(), 'year')
         </div>
       )
     }
+    <Comments />
   </div>
   <!-- E 内容 -->
   <!-- S 目录 -->

@@ -7,13 +7,13 @@ const year = new Date().getFullYear();
 
 export default defineConfig({
   lang: 'en-US',
-  site: 'https://slate-blog-demo.vercel.app',
-  avatar: '/avatar.png',
-  title: 'Kuda Mupeni',
-  description: 'My thoughts, simple stories.',
+  site: 'https://kudamupeni.vercel.app',
+  avatar: '/favicons/favicon.ico',
+  title: "Thoughts and Ramblings",
+  description: "A safe space for me to share my thoughts and ideas on topics I care about.",
   lastModified: true,
   readTime: true,
   footer: {
-    copyright: `© ${year} Slate Design`,
+    copyright: `© ${year} Kudakwashe Mupeni`,
   }
 });
