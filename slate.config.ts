@@ -5,6 +5,8 @@ import { defineConfig } from './src/helpers/config-helper';
 
 const year = new Date().getFullYear();
 
+const { ALGOLIA_API_KEY, ALGOLIA_APP_ID,ALGOLIA_INDEX_NAME } = import.meta.env
+
 export default defineConfig({
   lang: 'en-US',
   site: 'https://kudamupeni.vercel.app',
@@ -17,8 +19,8 @@ export default defineConfig({
     copyright: `© ${year} Kudakwashe Mupeni`,
   },
   algolia: {
-    apiKey: process.env.ALGOLIA_API_KEY as string,
-    appId: process.env.ALGOLIA_APP_ID as string,
-    indexName: process.env.ALGOLIA_INDEX_NAME as string,
+    apiKey: ALGOLIA_API_KEY,
+    appId: ALGOLIA_APP_ID,
+    indexName: ALGOLIA_INDEX_NAME,
   }
 });
