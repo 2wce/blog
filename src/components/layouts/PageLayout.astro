@@ -6,7 +6,7 @@ import NormalJsonLd from '@/components/json-ld/normal.astro';
 import slateConfig from '~@/slate.config';
 import { getFullTitle } from '@/helpers/utils';
 import '@/assets/style/common.css';
-
+import Analytics from '@vercel/analytics/astro'
 interface Props {
   title?: string;
   description?: string;
@@ -48,6 +48,7 @@ const themeScript = `
       <NormalJsonLd title={fullTitle} description={description} image={image} />
     </slot>
     <script is:inline set:html={themeScript}></script>
+    <Analytics />
   </head>
   <body class="bg-slate1">
     <div class="m-auto flex min-h-dvh max-w-180 flex-col px-6 pb-6 pt-18">
