@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import Search from '@/components/search';
 import PageLayout from '@/components/layouts/PageLayout.astro';
 import slateConfig from '~@/slate.config';
+import '@/assets/style/blog.css';
+import Intro from '@/content/intro.md';
 
 const postCollection = await getCollection('post', ({ data }) => {
   return import.meta.env.DEV || data.draft !== true;
@@ -19,7 +21,7 @@ const posts = [...postCollection]
 ---
 
 <PageLayout>
-  <section class="relative mb-16">
+  <section class="relative mb-6">
     <h3 class="text-[40px] font-semibold leading-tight text-slate12">
       {slateConfig.title}
     </h3>
@@ -31,6 +33,15 @@ const posts = [...postCollection]
   </section>
 
   <section class="mb-16">
+    <div class="blog-content">
+      <Intro />
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h3 class="mb-3 text-xl font-semibold leading-tight text-slate12 sm:ml-2">
+      Blog Posts
+    </h3>
     <div class="text-base text-slate12">
       {
         posts.map((item) => (
@@ -50,8 +61,4 @@ const posts = [...postCollection]
     </div>
     <!-- <Button className='m-auto mt-6' block> More </Button> -->
   </section>
-
-  <!-- S 标签 -->
-
-  <!-- E 标签 -->
 </PageLayout>
